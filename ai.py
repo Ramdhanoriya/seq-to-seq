@@ -10,7 +10,6 @@ from keras.utils.vis_utils import plot_model
 from keras.preprocessing import sequence
 from keras.layers import Dense
 
-
 def define_models(n_input, n_output, n_units):
     # define training encoder
     encoder_inputs = Input(shape=(None, n_input))
@@ -37,8 +36,6 @@ def define_models(n_input, n_output, n_units):
     # return all models
     return model, encoder_model, decoder_model
 
-
-
 # one hot encode
 def one_hot_encode(X, max_int):
     Xenc = list()
@@ -52,7 +49,6 @@ def one_hot_encode(X, max_int):
 
     return Xenc
 
-
 # invert encoding
 def invert(seq):
     strings = list()
@@ -63,69 +59,49 @@ def invert(seq):
         else:
             return ' '.join(strings)
 
-
-
-
-
 # generate target given source sequence
 def predict_sequence(infenc, infdec, source, n_steps, cardinality):
     # encode
     state = infenc.predict(source)
     # start of sequence input
     target_seq = array(one_hot_encode(array([[word_to_int_input["_"]]]),encoded_length))
-
     # collect predictions
     output = list()
     for t in range(n_steps):
         # predict next char
         yhat, h, c = infdec.predict([target_seq] + state)
-
-
         # store prediction
         output.append(yhat[0,0,:])
-
         # update state
         state = [h, c]
         # update target sequence
         target_seq = yhat
     return array(output)
 
-
-
+# load integer encoding dict
 classifier_f = open("word_to_int_input.pickle", "rb")
 word_to_int_input = pickle.load(classifier_f)
 classifier_f.close()
-
-
 classifier_f = open("int_to_word_input.pickle", "rb")
 int_to_word_input = pickle.load(classifier_f)
 classifier_f.close()
 
+# define model
 encoded_length=len(word_to_int_input)
-
 train, infenc, infdec = define_models(encoded_length, encoded_length, 128)
 
+# load weights
 infenc.load_weights("model_enc.h5")
 infdec.load_weights("model_dec.h5")
 
-
+# start prediction
 while True:
-
     input_data=input().lower()
-
     input_data=word_tokenize(input_data)
-
     input_data=[word_to_int_input[word] for word in input_data if word.isalpha()]
-
     input_data=np.array([input_data])
-
     input_data = sequence.pad_sequences(input_data, maxlen=10,padding='post')
-
     input_data=one_hot_encode(input_data,encoded_length)
-
     input_data=array(input_data)
-
     target = predict_sequence(infenc, infdec, input_data, 10, encoded_length)
-
     print(invert(target))
-
