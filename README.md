@@ -1,9 +1,17 @@
-# Sequnce to Sequence Learning
+# Sequnce to Sequence Learning in Keras
 The approach involves two recurrent neural networks, one to encode the source sequence, called the encoder, and a second to decode the encoded source sequence into the target sequence, called the decoder.
 ![alt text](https://cdn-images-1.medium.com/max/1585/1*sO-SP58T4brE9EHazHSeGA.png)
 
 ## Getting Started
 ### Prerequisites
+
+
+
+
+
+
+
+
 1. TensorFlow
 2. Keras
 
