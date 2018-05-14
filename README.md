@@ -6,7 +6,7 @@ How to do Sequence to Sequence Learning using Keras
 ## Getting Started
 ### Dataset
 
-> Input1: ['hi', 'how', 'are', 'you]
+> ***Input1: ['hi', 'how', 'are', 'you]
 
 > Input2: ['_', 'i', 'am']
 
