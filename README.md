@@ -4,14 +4,6 @@ The approach involves two recurrent neural networks, one to encode the source se
 
 ## Getting Started
 ### Prerequisites
-
-
-
-
-
-
-
-
 1. TensorFlow
 2. Keras
 
