@@ -18,5 +18,7 @@ Run train.py
 ### Testing
 Run ai.py
 
+##License
+This project is licensed under the MIT License
 
 
